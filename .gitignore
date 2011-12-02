@@ -4,3 +4,11 @@
 /app/logs/*
 /vendor/
 /app/config/parameters.ini
+
+*.swp
+*~
+
+.DS_Store*
+ehthumbs.db
+Thumbs.db
+Icon?
