@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <link href="{{ asset('bundles/chasadmin/css/styles.less') }}" type="text/css" rel="stylesheet/less" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/chasadmin/js/less-1.1.5.min.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    
+    <div id="header">
+        {% block header %}
+            {% include 'ChasAdminBundle:Admin:header.html.twig' %}
+        {% endblock %}
+    </div>
+
+    <div id="sidebar">
+        {% block sidebar %}
+            {% include 'ChasAdminBundle:Admin:sidebar.html.twig' %}
+        {% endblock  %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+            <h1>Välkommen!</h1>
+            <p>Detta är Funäsfjällens reseguide admin!<br />Det kommer bli FETT YAO!</p>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+ChasAdminBundle_homepage:
+    pattern:  /
+    defaults: { _controller: ChasAdminBundle:Default:index }

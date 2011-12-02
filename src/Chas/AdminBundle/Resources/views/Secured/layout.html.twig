@@ -1,0 +1,6 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    <li>logged in as <strong>{{ app.user ? app.user.username : 'Anonymous' }}</strong> - <a href="{{ path('_logout') }}">Logout</a></li>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'ChasAdminBundle:Admin:index.html.twig' %}
+
+{% block content %}
+<h1>CarPool</h1>
+<ul>
+{% for resource in resources %}
+    <li><a href="{{ path('API_carpool_single', { 'id': resource.id }) }}">
+        {{ resource.departure }} - {{ resource.destination.name }}, {{ resource.datefrom.format('Y-m-d') }}, {{ resource.seats }} seats
+    </a></li>
+{% endfor %}
+</ul>
+{% endblock %}

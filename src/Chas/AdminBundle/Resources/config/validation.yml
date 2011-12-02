@@ -1,0 +1,4 @@
+Chas\AdminBundle\Entity\Page:
+    proterties:
+        page:
+            - NotBlank: ~

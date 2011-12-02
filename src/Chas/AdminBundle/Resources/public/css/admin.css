@@ -1,0 +1,43 @@
+body{
+    font-size: 62.5%;
+    font-family: Arial;
+}
+
+p{
+    font-size: 1em;
+}
+
+#wrapper{
+    width: 800px;
+    margin: 0 auto;
+    
+    overflow: hidden;
+
+    background: #ccddff;
+}
+
+#header{
+    width: 100%;
+    
+    text-align: right;
+
+    background: #ddffcc;
+}
+
+#sidebar{
+    width: 200px;
+    
+    float: left;
+
+    background: #ddccff;
+}
+
+#content{
+    width: 600px;
+    
+    float: right;
+
+    background: #ffddcc;
+}
+
+

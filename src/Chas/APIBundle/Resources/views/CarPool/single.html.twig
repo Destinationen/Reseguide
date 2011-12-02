@@ -1,0 +1,6 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1>{{ resource.departure }} - {{ resource.destination.name }}</h1>
+<p>{{ resource.datefrom.format('Y-m-d') }}, {{ resource.seats }} seats</p>
+{% endblock %}

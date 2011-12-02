@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<p>{{ r }}</p>
+<ul>
+{% for resource in resources %}
+    <li><a href="{{ path('API_single', { 'resource': 'train', 'id': resource.id }) }}">
+        {{ resource.name }}
+    </a></li>
+{% endfor %}
+</ul>
+{% endblock %}

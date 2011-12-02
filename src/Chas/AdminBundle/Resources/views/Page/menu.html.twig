@@ -1,0 +1,7 @@
+{% import "ChasAdminBundle:Admin:isActive.html.twig" as isActive %}
+{{ page }}
+<ul>
+    <li><a href="{{ path('_security_page_taxi') }}" class="{{ isActive.isActive('taxi', page) }}">Taxi</a> </li>
+    <li><a href="{{ path('_security_page_carrental') }}" class="{{ isActive.isActive('carrental', page) }}">Car Rental</a></li>
+    <li><a href="{{ path('_security_page_new') }}" class="{{ isActive.isActive('newPage', page) }}">New</a></li>
+</ul>

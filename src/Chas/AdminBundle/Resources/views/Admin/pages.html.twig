@@ -1,0 +1,7 @@
+{% extends 'ChasAdminBundle:Admin:index.html.twig' %}
+
+{% block content %}
+<h1>Pages</h1>
+{% render 'ChasAdminBundle:Page:menu' with {'page': page} %}
+{% render 'ChasAdminBundle:Page:getPage' with {'page': page, 'form': form} %}
+{% endblock %}
