@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Chas\APIBundle\Entity\Page;
 
 /**
@@ -80,29 +81,9 @@ class SecuredController extends Controller
      */
     public function pageAction()
     {
-        return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'taxi', 'form' => null));
+        return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'welcome', 'form' => null));
     }
    
-    /**
-     * @Route("/pages/taxi", name="_security_page_taxi")
-     * @Secure(roles="ROLE_ADMIN")
-     * @Template()
-     */
-    public function pageTaxiAction()
-    {
-       return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'taxi', 'form' => null ));
-    }
-
-    /**
-     * @Route("/pages/carrental", name="_security_page_carrental")
-     * @Secure(roles="ROLE_ADMIN")
-     * @Template()
-     */
-    public function pageCarRentalAction()
-    {
-        return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'carrental', 'form' => null));
-    }
-
     /**
      * @Route("/pages/new", name="_security_page_new")
      * @Secure(roles="ROLE_ADMIN")
@@ -138,13 +119,37 @@ class SecuredController extends Controller
     }
 
     /**
-     * @Route("/pages/taxi/update")
+     * @Route("/pages/{id}", name="_security_page_update")
      * @Secure(roles="ROLE_ADMIN")
      * @Template()
      */
-    public function updateTaxiAction(Request $request)
+    public function pageUpdateAction($id, Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        //$em->
+        $p = $em->getRepository('ChasAPIBundle:Page')->find($id);
+        
+        if (!$p && $request->getMethod() != 'POST'){
+            throw $this->createNotFoundException('No page found for id ' . $id);
+        }
+        
+        $form = $this->createFormBuilder($p)
+            ->add('page','text')
+            ->add('phonenumber','text')
+            ->add('email','email')
+            ->add('address','textarea')
+            ->getForm();
+        
+        if ($request->getMethod() == 'POST'){
+            $form->bindRequest($request);
+
+            if ($form->isValid()){
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('_security_page'));
+            }
+        }
+        return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'updatePage','form' => $form->createView()));
+
+        //return $this->render('ChasAdminBundle:Page:update.html.twig', array('form' => $form->createView()));
     }
 }

@@ -1,0 +1,6 @@
+<form action="{{ path('_security_page_update', {'id': form.vars.value.id}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
