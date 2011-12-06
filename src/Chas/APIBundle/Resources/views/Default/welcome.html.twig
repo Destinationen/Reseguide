@@ -11,9 +11,12 @@
     <li>.rss</li>
 </ul>
 </p>
-
+<p>
+The API uses a internal request cache, and the symfont cache. How long the system will cache the request depends on the request type.
+</p>
 <p>
 <ul>
+    <li><a href="{{ path('API_weather', { 'lat': '62.53', 'lon': '12.55' }) }}">/api/weather/62.53/12.55</a></li>
     <li><a href="{{ path('API_carpool_all') }}">/api/carpool</a></li>
 {% for timetable in timetables %}
     <li><a href="{{ path('API_all', { 'resource':  timetable.type  }) }}">/api/timetable/{{ timetable.type }}</a></li>

@@ -14,7 +14,12 @@ API_carpool_all:
 API_carpool_single_new:
     pattern:  /api/carpool
     defaults: { _controller: ChasAPIBundle:API:carpool_new }
-    requiremenr }
+    requirements:
+        _method:    GET
+
+API_weather:
+    pattern:  /api/weather/{lat}/{lon}
+    defaults: { _controller: ChasAPIBundle:API:weather }
     requirements:
         _method:    GET
 
