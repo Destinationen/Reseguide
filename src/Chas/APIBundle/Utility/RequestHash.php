@@ -6,11 +6,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestHash
 {
-    public static function getHash()
+    public static function getHash($url = null)
     {
-        $request = Request::createFromGlobals();
-        $return = $request->getPathInfo();
-        
+        if ($url == null){
+            $request = Request::createFromGlobals();
+            $return = $request->getPathInfo();
+        } else {
+            $return = $url;
+        }
         return sha1($return);
     }
 }

@@ -14,27 +14,9 @@ API_carpool_all:
 API_carpool_single_new:
     pattern:  /api/carpool
     defaults: { _controller: ChasAPIBundle:API:carpool_new }
-    requirements:
-        _method:    POST
-
-API_carpool_single:
-    pattern:  /api/carpool/{id}.{_format}
-    defaults: { _controller: ChasAPIBundle:API:carpool_single, _format: html }
+    requiremenr }
     requirements:
         _method:    GET
-        _format:    html|json|xml|rss
-
-API_carpool_single_update:
-    pattern:  /api/carpool/{id}
-    defaults: { _controller: ChasAPIBundle:API:carpool_single_update }
-    requirements:
-        _method:    PUT
-
-API_carpool_single_delete:
-    pattern:  /api/carpool/{id}
-    defaults: { _controller: ChasAPIBundle:API:carpool_single_delete }
-    requirements:
-        _method:    DELETE
 
 API_all:
     pattern:  /api/timetable/{resource}.{_format}
