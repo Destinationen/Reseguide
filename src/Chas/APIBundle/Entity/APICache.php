@@ -5,7 +5,7 @@ namespace Chas\APIBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Chas\APIBundle\Repository\APICacheRepository")
  * @ORM\Table(name="apicache")
  */
 class APICache

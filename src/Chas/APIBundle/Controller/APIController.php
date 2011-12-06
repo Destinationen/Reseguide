@@ -25,26 +25,8 @@ class APIController extends Controller
     public function indexAction($resource)
     {
         
-        
         $em = $this->getDoctrine()->getEntityManager();
-        /*
-        $ac = $em->getRepository('ChasAPIBundle:APICache')
-            ->findByRequest($requestHash);
-        if (!$ac){
-            //No one has requested this before, lets get the response and cache it here.
-            echo $requestHash . ' not found in the apicache table<br />';    
-            
-            $request = Request::createFromGlobals(); 
-            $zHttpConf = array(
-                'maxredirects'       => 0,
-                'timeout'            => 30
-            );
-            $client = new \Zend_Http_Client($request->getPathInfo(), $zHttpConf);
-            $responce = $client->request();
-
-            var_dump($responce);
-        }
-        */
+        
         $r = $em->getRepository('ChasAPIBundle:TimeTable')
             ->findByType($resource);
 
@@ -92,7 +74,7 @@ class APIController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         
         $ac = $em->getRepository('ChasAPIBundle:APICache')
-            ->findOneByRequest($requestHash);
+            ->findCached($requestHash);
         if (!$ac){
             //No one has requested this before, or it was to long ago, lets get the response and cache it here and then send it to the client.
             
