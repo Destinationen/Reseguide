@@ -10,6 +10,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Chas\APIBundle\Entity\Page;
+use Chas\BannerBundle\Entity\Banner;
 
 /**
  * @Route("/secured")
@@ -161,7 +162,73 @@ class SecuredController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $b = $em->getRepository('ChasBannerBundle:Banner')->findAll();
 
-        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('banners' => $b));
+        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('page' => 'welcome','banners' => $b, 'form' => null));
 
     }
+    
+    /**
+     * @Route("/banner/new", name="_security_banner_new")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
+     */
+    public function bannerNewAction(Request $request)
+    {
+        $b = new Banner();
+        $b->setName('Banner Name');
+        $b->setUrl('http://example.com');
+        $b->setClicks(0);
+
+        $form = $this->createFormBuilder($b)
+            ->add('name','text')
+            ->add('url','text')
+            ->add('clicks','hidden')
+            ->getForm();
+        
+        if ($request->getMethod() == 'POST'){
+            $form->bindRequest($request);
+
+            if ($form->isValid()){
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($b);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('_security_banner'));
+            }
+        }
+
+        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('page' => 'new', 'form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/banner/{id}", name="_security_banner_update")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
+     */
+    public function bannerUpdateAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $b = $em->getRepository('ChasBannerBundle:Banner')->find($id);
+        
+        if (!$b && $request->getMethod() != 'POST'){
+            throw $this->createNotFoundException('No banner found for id ' . $id);
+        }
+        
+        $form = $this->createFormBuilder($b)
+            ->add('name','text')
+            ->add('url','text')
+            ->getForm();
+        
+        if ($request->getMethod() == 'POST'){
+            $form->bindRequest($request);
+
+            if ($form->isValid()){
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('_security_banner'));
+            }
+        }
+
+        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('page' => 'update', 'form' => $form->createView()));
+    }
+
 }

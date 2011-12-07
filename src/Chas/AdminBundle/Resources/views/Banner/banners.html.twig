@@ -1,0 +1,6 @@
+<ul>
+{% for banner in banners %}
+    <li><a href="{{ path('_security_banner_update', {'id': banner.id}) }}">{{ banner.name }}</a></li>
+{% endfor %}
+</ul>
+

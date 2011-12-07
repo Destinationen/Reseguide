@@ -1,0 +1,6 @@
+{% import "ChasAdminBundle:Admin:isActive.html.twig" as isActive %}
+
+<ul>
+    <li><a href="{{ path('_security_banner') }}" class="{{ isActive.isActive('welcome', page) }}">Banners</a></li>
+    <li><a href="{{ path('_security_banner_new') }}" class="{{ isActive.isActive('new', page) }}">New</a></li>
+</ul>

@@ -2,10 +2,6 @@
 
 {% block content %}
 <h1>Banners</h1>
-{#% render 'ChasAdminBundle:Page:menu' with {'page': page} %#}
-<ul>
-{% for banner in banners %}
-    <li>{{ banner.name }}</li>
-{% endfor %}
-</ul>
+{% include 'ChasAdminBundle:Banner:menu.html.twig' with {'page': page} %}
+{% render 'ChasAdminBundle:Banner:getPage' with {'page': page, 'form': form} %}
 {% endblock %}
