@@ -1,0 +1,11 @@
+{% extends 'ChasAdminBundle:Admin:index.html.twig' %}
+
+{% block content %}
+<h1>Banners</h1>
+{#% render 'ChasAdminBundle:Page:menu' with {'page': page} %#}
+<ul>
+{% for banner in banners %}
+    <li>{{ banner.name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

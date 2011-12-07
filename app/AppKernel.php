@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Chas\AdminBundle\ChasAdminBundle(),
             new Chas\APIBundle\ChasAPIBundle(),
+            new Chas\BannerBundle\ChasBannerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

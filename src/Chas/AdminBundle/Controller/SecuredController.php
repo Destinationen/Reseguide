@@ -149,7 +149,19 @@ class SecuredController extends Controller
             }
         }
         return $this->render('ChasAdminBundle:Admin:pages.html.twig', array('page' => 'updatePage','form' => $form->createView()));
+    }
 
-        //return $this->render('ChasAdminBundle:Page:update.html.twig', array('form' => $form->createView()));
+    /**
+     * @Route("/banner", name="_security_banner")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
+     */
+    public function bannerAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $b = $em->getRepository('ChasBannerBundle:Banner')->findAll();
+
+        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('banners' => $b));
+
     }
 }
