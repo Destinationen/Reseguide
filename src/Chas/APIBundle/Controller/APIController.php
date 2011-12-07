@@ -66,7 +66,7 @@ class APIController extends Controller
 
     public function weatherAction($lat, $lon)
     {
-
+        $d = new \DateTime('now');
         $yr = 'http://api.yr.no/weatherapi/locationforecast/1.8/?lat='.$lat.';lon='.$lon.';msl=583';
 
         $requestHash = RequestHash::getHash($yr);
@@ -74,7 +74,7 @@ class APIController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         
         $ac = $em->getRepository('ChasAPIBundle:APICache')
-            ->findCached($requestHash);
+            ->findCached($requestHash, $d);
         if (!$ac){
             //No one has requested this before, or it was to long ago, lets get the response and cache it here and then send it to the client.
             

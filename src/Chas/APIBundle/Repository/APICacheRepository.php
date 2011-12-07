@@ -10,9 +10,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class APICacheRepository extends EntityRepository
 {
-    public function findCached($hash)
+    public function findCached($hash, \DateTime $d)
     {
-        $d = new \DateTime('now');
+        //$d = new \DateTime('now');
 
         $em = $this->getEntityManager();
         $query = $em->createQuery('SELECT apic
@@ -20,7 +20,12 @@ class APICacheRepository extends EntityRepository
                            WHERE apic.request = :hash
                            AND apic.createddate = :experationdate
                            ')->setParameters( array('hash' => $hash, 'experationdate' => $d->format('Y-m-d')) );
-        $r = $query->getSingleResult();
+        
+        try {
+            $r = $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $r = null;
+        }
 
         return $r;
     }
