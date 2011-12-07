@@ -11,6 +11,10 @@ API_carpool_all:
         _method:    GET
         _format:    html|json|xml|rss
 
+API_carpool_single:
+    pattern:  /api/carpool/{id}.{_format}
+    defaults: { _controller: ChasAPIBundle:API:carpool_single, _format: html }
+
 API_carpool_single_new:
     pattern:  /api/carpool
     defaults: { _controller: ChasAPIBundle:API:carpool_new }
