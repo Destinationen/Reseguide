@@ -3,5 +3,9 @@
 {% block content %}
 <h1>Banners</h1>
 {% include 'ChasAdminBundle:Banner:menu.html.twig' with {'page': page} %}
-{% render 'ChasAdminBundle:Banner:getPage' with {'page': page, 'form': form} %}
+
+{% if id is not defined %}
+    {% set id = null %}
+{% endif %}
+{% render 'ChasAdminBundle:Banner:getPage' with {'page': page, 'form': form, 'id': id} %}
 {% endblock %}

@@ -1,1 +1,5 @@
-Hello {{ name }}!
+{% for banner in banners %}
+    <a href="{{ url( 'banner_redirect', { 'id': banner.getId } ) }}">
+        <img src="{{ url('ChasAdminBundle_homepage') }}{{ banner.getWebPath }}" alt="{{ banner.getName }}" />
+    </a>
+{% endfor %}

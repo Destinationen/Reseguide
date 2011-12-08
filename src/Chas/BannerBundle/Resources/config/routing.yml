@@ -1,0 +1,7 @@
+banner_get:
+    pattern:    /banner/
+    defaults:   { _controller: ChasBannerBundle:Default:all }
+
+banner_redirect:
+    pattern:    /banner/{id}
+    defaults:   { _controller: ChasBannerBundle:Default:redirect }

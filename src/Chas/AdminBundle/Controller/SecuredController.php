@@ -181,6 +181,9 @@ class SecuredController extends Controller
         $form = $this->createFormBuilder($b)
             ->add('name','text')
             ->add('url','text')
+            ->add('pubdate', 'date')
+            ->add('unpubdate', 'date')
+            ->add('file')
             ->add('clicks','hidden')
             ->getForm();
         
@@ -189,6 +192,9 @@ class SecuredController extends Controller
 
             if ($form->isValid()){
                 $em = $this->getDoctrine()->getEntityManager();
+
+                $b->upload();
+
                 $em->persist($b);
                 $em->flush();
 
@@ -216,19 +222,43 @@ class SecuredController extends Controller
         $form = $this->createFormBuilder($b)
             ->add('name','text')
             ->add('url','text')
+            ->add('pubdate', 'date')
+            ->add('unpubdate', 'date')
+            ->add('file')
             ->getForm();
         
         if ($request->getMethod() == 'POST'){
             $form->bindRequest($request);
 
             if ($form->isValid()){
+                
+                $b->upload();
+
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('_security_banner'));
             }
         }
-
-        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('page' => 'update', 'form' => $form->createView()));
+        
+        return $this->render('ChasAdminBundle:Admin:banner.html.twig', array('page' => 'update', 'form' => $form->createView(), 'id' => $id));
     }
+    
+    /**
+     * @Route("/banner/{id}/remove", name="_security_banner_remove")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
+     */
+    public function removeBannerAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $b = $em->getrepository('ChasBannerBundle:Banner')->find($id);
+        
+        $em->remove($b);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('_security_banner'));
+
+    }
+
 
 }
