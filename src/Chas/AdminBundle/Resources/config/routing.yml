@@ -1,3 +1,27 @@
 ChasAdminBundle_homepage:
-    pattern:  /
-    defaults: { _controller: ChasAdminBundle:Default:index }
+    pattern:        /
+    defaults:       { _controller: ChasAdminBundle:Default:index }
+
+ChasAdminBundle_page:
+    pattern:        /secured/page
+    defaults:       { _controller: ChasAdminBundle:Page:page }
+ChasAdminBundle_page_new:
+    pattern:        /secured/page/new
+    defaults:       { _controller: ChasAdminBundle:Page:pageNew }
+ChasAdminBundle_page_update:
+    pattern:        /secured/page/{id}
+    defaults:       { _controller: ChasAdminBundle:Page:pageUpdate }
+
+
+ChasAdminBundle_banner:
+    pattern:        /secured/banner
+    defaults:       { _controller: ChasAdminBundle:Banner:banner }
+ChasAdminBundle_banner_new:
+    pattern:        /secured/banner/new
+    defaults:       { _controller: ChasAdminBundle:Banner:bannerNew }
+ChasAdminBundle_banner_update:
+    pattern:        /secured/banner/{id}
+    defaults:       { _controller: ChasAdminBundle:Banner:bannerUpdate }
+ChasAdminBundle_banner_remove:
+    pattern:        /secured/banner/{id}/remove
+    defaults:       { _controller: ChasAdminBundle:Banner:bannerRemove }

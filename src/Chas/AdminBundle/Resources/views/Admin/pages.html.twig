@@ -2,6 +2,13 @@
 
 {% block content %}
 <h1>Pages</h1>
-{% render 'ChasAdminBundle:Page:menu' with {'page': page} %}
-{% render 'ChasAdminBundle:Page:getPage' with {'page': page, 'form': form} %}
+{% include 'ChasAdminBundle:Admin:submenu.html.twig' with {'currentpage': currentpage, 'menus': menus} %}
+
+{% if id is not defined %}
+    {% set id = null %}
+{% endif %}
+<div class="content">
+{% render 'ChasAdminBundle:Page:getPage' with {'currentpage': currentpage, 'form': form, 'id': id} %}
+</div>
+
 {% endblock %}

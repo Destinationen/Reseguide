@@ -1,0 +1,13 @@
+{% import "ChasAdminBundle:Admin:isActive.html.twig" as isActive %}
+
+<div class="submenu">
+<ul>
+    {% for menu in menus %}
+        <li>
+            <a href="{{ menu.path }}" class="{{ isActive.isActive(menu.name, currentpage) }}">
+                {{ menu.name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+</div>

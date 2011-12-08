@@ -2,10 +2,12 @@
 
 {% block content %}
 <h1>Banners</h1>
-{% include 'ChasAdminBundle:Banner:menu.html.twig' with {'page': page} %}
+{% include 'ChasAdminBundle:Admin:submenu.html.twig' with {'currentpage': currentpage, 'menus': menus} %}
 
 {% if id is not defined %}
     {% set id = null %}
 {% endif %}
-{% render 'ChasAdminBundle:Banner:getPage' with {'page': page, 'form': form, 'id': id} %}
+<div class="content">
+{% render 'ChasAdminBundle:Banner:getPage' with {'currentpage': currentpage, 'form': form, 'id': id} %}
+</div>
 {% endblock %}

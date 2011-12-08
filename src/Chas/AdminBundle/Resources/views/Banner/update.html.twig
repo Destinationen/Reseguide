@@ -1,9 +1,9 @@
-<form action"{{ path('_security_banner') }}" method="post" {{ form_enctype(form) }}>
+<form action"{{ path('ChasAdminBundle_banner') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
     {{ form_widget(form) }}
 
     <input type="submit" />
 </form>
 {% if id %}
-<a href="{{ path('_security_banner_remove', {'id': id}) }}">Remove!</a>
+<a href="{{ path('ChasAdminBundle_banner_remove', {'id': id}) }}">Remove!</a>
 {% endif %}
