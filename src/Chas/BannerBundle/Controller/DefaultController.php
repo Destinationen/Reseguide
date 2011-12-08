@@ -14,8 +14,21 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $banners = $em->getRepository('ChasBannerBundle:Banner')->findPublished();
+        
+        $base_path = $this->get('router')->generate('ChasAdminBundle_homepage', array(), true);
 
-        return $this->render('ChasBannerBundle:Default:index.html.twig', array('banners' => $banners));
+        $return = array();
+        for ($i=0;$i<count($banners);$i++){
+            $tmp_return = array();
+            $tmp_return['url'] = $base_path . $banners[$i]->getId();
+            $tmp_return['image'] = $banners[$i]->getWebPath();
+            $return[] = $tmp_return;
+        }
+        
+        $response = new Response(json_encode(array('banners' => $return)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+        //return $this->render('ChasBannerBundle:Default:index.html.twig', array('banners' => $banners));
     }
 
     public function redirectAction($id)
