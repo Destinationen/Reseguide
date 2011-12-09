@@ -1,6 +1,20 @@
-<ul>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Url</td>
+        <td>Clicks</td>
+    </tr>
 {% for banner in banners %}
-    <li><a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.name }}</a></li>
+    <tr>
+        <td>
+            <a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.name }}</a>
+        </td>
+        <td>
+            <a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.url }}</a>
+        </td>
+        <td>
+            <a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.clicks }}</a>
+        </td>
 {% endfor %}
-</ul>
+</table>
 

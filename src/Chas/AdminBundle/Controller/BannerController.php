@@ -93,7 +93,7 @@ class BannerController extends Controller
     public function bannerRemoveAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $b = $em->getrepository('ChasBannerBundle:Banner')->find($id);
+        $b = $em->getRepository('ChasBannerBundle:Banner')->find($id);
         
         $em->remove($b);
         $em->flush();

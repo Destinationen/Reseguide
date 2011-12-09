@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Chas\APIBundle\Entity\Page;
-use Chas\BannerBundle\Entity\Banner;
 
 /**
  * @Route("/secured")
@@ -59,20 +57,6 @@ class SecuredController extends Controller
     public function dashboardAction()
     {
         return $this->render('ChasAdminBundle:Admin:index.html.twig');
-    }
-
-    /**
-     * @Route("/carpool", name="_security_carpool")
-     * @Secure(roles="ROLE_ADMIN")
-     * @Template()
-     */
-    public function carpoolAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $r = $em->getRepository('ChasAPIBundle:CarPool')
-            ->findAllOrderedByDate();
-
-        return $this->render('ChasAdminBundle:Admin:carpool.html.twig', array('resources' => $r));
     }
 
 }

@@ -25,3 +25,10 @@ ChasAdminBundle_banner_update:
 ChasAdminBundle_banner_remove:
     pattern:        /secured/banner/{id}/remove
     defaults:       { _controller: ChasAdminBundle:Banner:bannerRemove }
+
+ChasAdminBundle_carpool:
+    pattern:        /secured/carpool
+    defaults:       { _controller: ChasAdminBundle:CarPool:carpool }
+ChasAdminBundle_carpool_remove:
+    pattern:        /secured/carpool/{id}/remove
+    defaults:       { _controller: ChasAdminBundle:CarPool:remove }
