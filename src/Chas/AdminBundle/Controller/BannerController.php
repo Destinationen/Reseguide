@@ -149,7 +149,7 @@ class BannerController extends Controller
         $banners_item['name'] = 'Banners';
         $menu[] = $banners_item;
 
-        $new_item['path'] = 'ChasAdminBundle_banner_new';
+        $new_item['path'] = $this->generateUrl('ChasAdminBundle_banner_new');
         $new_item['name'] = 'New';
         $menu[] = $new_item;
 
