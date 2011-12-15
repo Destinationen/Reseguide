@@ -13,6 +13,18 @@ ChasAdminBundle_page_update:
     defaults:       { _controller: ChasAdminBundle:Page:pageUpdate }
 
 
+ChasAdminBundle_route:
+    pattern:        /secured/route
+    defaults:       { _controller: ChasRouteBundle:Route:route }
+ChasAdminBundle_route_new:
+    pattern:        /secured/route/new
+    defaults:       { _controller: ChasRouteBundle:Route:new }
+ChasAdminBundle_route_remove:
+    pattern:        /secured/route/{id}/remove
+    defaults:       { _controller: ChasRouteBundle:Route:remove }
+
+
+
 ChasAdminBundle_banner:
     pattern:        /secured/banner
     defaults:       { _controller: ChasAdminBundle:Banner:banner }

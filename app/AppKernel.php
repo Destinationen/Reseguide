@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Chas\AdminBundle\ChasAdminBundle(),
             new Chas\APIBundle\ChasAPIBundle(),
             new Chas\BannerBundle\ChasBannerBundle(),
+            new Chas\RouteBundle\ChasRouteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

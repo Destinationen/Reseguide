@@ -1,0 +1,7 @@
+parameters:
+#    chas_banner.example.class: Chas\BannerBundle\Example
+
+services:
+#    chas_banner.example:
+#        class: %chas_banner.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

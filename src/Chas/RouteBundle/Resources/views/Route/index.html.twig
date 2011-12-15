@@ -1,0 +1,86 @@
+{% extends 'ChasAdminBundle:Admin:index.html.twig' %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC1urIf2Q8He43uVf0FlzFWXioR66eua_4&sensor=false" type="text/javascript"></script>
+
+<script type="text/javascript">
+function initialize() {
+    var map_canvas = document.getElementById("map_canvas");
+    //map_canvas.innerHTML("");
+
+    var latlng = new google.maps.LatLng(62.545376, 12.544772);
+    var myOptions = {
+        zoom: 10,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    var map = new google.maps.Map(map_canvas, myOptions);
+    
+    var markersArray = [];
+
+    {% for stop in stops %}
+        
+        var ll_{{ stop.getId }} = new google.maps.LatLng({{ stop.getRouteLocations[0].getLon }},{{stop.getRouteLocations[0].getLat }} );
+
+        var marker_{{ stop.getId }} = new google.maps.Marker({
+            position: ll_{{ stop.getId }},
+            animation: google.maps.Animation.DROP,
+            title: "{{ stop.getName }}"
+        })
+
+        marker_{{ stop.getId }}.setMap(map);
+    {% endfor %}
+    
+    {% for route in routes %}
+        var coordinates = [
+            {% for rl in route.getRouteLocations %}
+                new google.maps.LatLng({{ rl.getLon }}, {{ rl.getLat }}),
+            {% endfor %}
+        ];
+    
+        var path = new google.maps.Polyline({
+            path: coordinates,
+            strokeColor: "#DD33DD",
+            strokeOpacity: 0.5,
+            strokeWeight: 4
+        });
+
+        path.setMap(map);
+    {% endfor %}
+
+}
+window.onload = initialize;
+</script>
+{% endblock %}
+
+
+{% block content %}
+<h2>Routes</h2>
+
+<div class="content">
+
+<div id="map_canvas" style="width: 560px; height: 400px;float: left; background: #ccc; text-align: center; margin:0 0 20px 0;"><span style="margin-top: 100px;">LOADING</span></div>
+<!--table>
+    <tr>
+        <td>Name</td>
+    </tr>
+{#% for route in routes %}
+    <tr>
+        <td>
+            <a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.name }}</a>
+        </td>
+{% endfor %#}
+</table-->
+
+<form action="{{ path('ChasAdminBundle_route_new') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+
+</div>
+{% endblock %}
