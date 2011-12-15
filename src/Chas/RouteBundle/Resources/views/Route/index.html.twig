@@ -63,18 +63,9 @@ window.onload = initialize;
 <div class="content">
 
 <div id="map_canvas" style="width: 560px; height: 400px;float: left; background: #ccc; text-align: center; margin:0 0 20px 0;"><span style="margin-top: 100px;">LOADING</span></div>
-<!--table>
-    <tr>
-        <td>Name</td>
-    </tr>
-{#% for route in routes %}
-    <tr>
-        <td>
-            <a href="{{ path('ChasAdminBundle_banner_update', {'id': banner.id}) }}">{{ banner.name }}</a>
-        </td>
-{% endfor %#}
-</table-->
 
+<h3>Upload KML</h3>
+<p>Create Markers(stops) and PolyLines(routes) in "My Maps" on <a href="http://maps.google.com">maps.google.com</a>. Click on the "kml" link to save a .kml file, upload this file here to replace the current Markers and PolyLines.</p>
 <form action="{{ path('ChasAdminBundle_route_new') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
     {{ form_widget(form) }}
