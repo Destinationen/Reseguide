@@ -9,6 +9,10 @@ ChasBannerBundle:
     resource: "@ChasBannerBundle/Resources/config/routing.yml"
     prefix:   /
 
+ChasRouteBundle:
+    resource: "@ChasRouteBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ChasAdminBundle:
     resource: "@ChasAdminBundle/Resources/config/routing.yml"
     prefix:   /

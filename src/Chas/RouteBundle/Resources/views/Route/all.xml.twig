@@ -1,0 +1,29 @@
+{% extends '::base.xml.twig' %}
+
+{% block body %}
+<stops>
+{% for stop in stops %}
+    <stop id="{{ stop.getId }}">
+        <name>{{ stop.getName }}</name>
+        <description>{{ stop.getDescription }}</description>
+        <lat>{{ stop.getRouteLocations[0].getLat }}</lat>
+        <lon>{{ stop.getRouteLocations[0].getLon }}</lon>
+    </stop>
+{% endfor %}
+</stops>
+<routes>
+{% for route in routes %}
+    <route id="{{ route.getId }}">
+        <name>{{ route.getName }}</name>
+        <description>{{ route.getDescription }}</description>
+        <locations>
+{% for rl in route.getRouteLocations %}
+            <location>
+                <lat>{{ rl.getLat }}</lat>
+                <lon>{{ rl.getLon }}</lon>
+{% endfor %}
+        </locations>
+    </route>
+{% endfor %}
+</routes>
+{% endblock %}

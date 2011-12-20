@@ -12,7 +12,74 @@ use Chas\RouteBundle\Entity\RouteLocation;
 
 class RouteController extends Controller
 {
+    
+    public function allAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $emr = $em->getRepository('ChasRouteBundle:Route');
+        $stops = $emr->findStops();
+        $routes = $emr->findRoutes();
+        
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->all2json($stops, $routes));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            case 'text/xml':
+                $response = $this->render('ChasRouteBundle:Route:all.xml.twig', array('stops' => $stops, 'routes' => $routes));
+                $response->headers->set('Content-Type', 'application/xml');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasRouteBundle:Route:index.html.twig', array('resources' => $r));
+                break;
+        }
 
+
+    }
+    
+    private function all2json($stops, $routes){
+        $return = array();
+
+        foreach ($stops as &$stop){
+            $tmp['id'] = $stop->getId();
+            $tmp['name'] = $stop->getName();
+            $tmp['description'] = $stop->getDescription();
+            
+            $locations = $stop->getRouteLocations();
+            foreach ($locations as &$location){
+                $tmp['lat'] = $location->getLat();
+                $tmp['lon'] = $location->getLon();
+            }
+
+            $return['stops'][] = $tmp;
+        }
+        unset($tmp);
+        foreach ($routes as &$route){
+            $tmp['id'] = $route->getId();
+            $tmp['name'] = $route->getName();
+            $tmp['description'] = $route->getDescription();
+            
+            $locations = $route->getRouteLocations();
+            foreach ($locations as &$location){
+                $tmp_loc['lat'] = $location->getLat();
+                $tmp_loc['lon'] = $location->getLon();
+                $tmp['locations'][] = $tmp_loc;
+            }
+
+            $return['routes'][] = $tmp;
+        }
+
+        return json_encode($return);
+    }  
+    
     public function routeAction()
     {
         
