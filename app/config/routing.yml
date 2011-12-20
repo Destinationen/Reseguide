@@ -1,10 +1,12 @@
+ChasAPIBundle:
+    resource: "@ChasAPIBundle/Resources/config/routing.yml"
+    
+chas_secured:
+    resource: "@ChasAdminBundle/Controller/SecuredController.php"
+    type:     annotation
+
 ChasBannerBundle:
     resource: "@ChasBannerBundle/Resources/config/routing.yml"
-    prefix:   /
-
-ChasAPIBundle:
-    resource: "@ChasAPIBundle/Controller/"
-    type:     annotation
     prefix:   /
 
 ChasAdminBundle:

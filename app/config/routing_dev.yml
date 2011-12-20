@@ -2,13 +2,6 @@ _assetic:
     resource: .
     type:     assetic
 
-chas_api:
-    resource: "@ChasAPIBundle/Resources/config/routing.yml"
-    
-chas_secured:
-    resource: "@ChasAdminBundle/Controller/SecuredController.php"
-    type:     annotation
-
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt
