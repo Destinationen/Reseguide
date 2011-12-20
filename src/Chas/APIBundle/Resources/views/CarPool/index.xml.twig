@@ -1,0 +1,15 @@
+{% extends '::base.xml.twig' %}
+
+{% block body %}
+<carpool>
+{% for resource in resources %}
+    <trip id="{{ resource.id }}">
+        <path>{{ url('API_carpool_single', { 'id': resource.id }) }}</path>
+        <departure>{{ resource.departure }}</departure>
+        <destination>{{ resource.destination.name }}</destination>
+        <date>{{ resource.datefrom.format('Y-m-d') }}</date>
+        <seats>{{ resource.seats }}</seats>
+    </trip>
+{% endfor %}
+</carpool>
+{% endblock %}

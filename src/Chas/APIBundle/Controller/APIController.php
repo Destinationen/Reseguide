@@ -45,13 +45,50 @@ class APIController extends Controller
         return $this->render('ChasAPIBundle:Default:single.html.twig', array('resources' => $r));
     }
 
-    public function carpoolAction()
+    public function carpoolAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $r = $em->getRepository('ChasAPIBundle:CarPool')
             ->findAllOrderedByDate();
+        
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->carpool_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            case 'text/xml':
+                $response = $this->render('ChasAPIBundle:CarPool:index.xml.twig', array('resources' => $r));
+                $response->headers->set('Content-Type', 'application/xml');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:CarPool:index.html.twig', array('resources' => $r));
+                break;
+        }
 
-        return $this->render('ChasAPIBundle:CarPool:index.html.twig', array('resources' => $r));
+    }
+    
+    private function carpool_json($r){
+        $return = array();
+
+        foreach ($r as &$trip){
+            $tmp['id'] = $trip->getId();
+            $tmp['url'] = $this->generateUrl('API_carpool_single', array('id' => $trip->getId()), true);
+            $tmp['departure'] = $trip->getDeparture();
+            $tmp['destination'] = $trip->getDestination()->getName();
+            $tmp['seats'] = $trip->getSeats();
+
+            $return[] = $tmp;
+        }
+
+        return json_encode($return);
     }
 
     public function carpool_singleAction($id)
@@ -106,4 +143,5 @@ class APIController extends Controller
 
         return new Response($r);
     }
+
 }

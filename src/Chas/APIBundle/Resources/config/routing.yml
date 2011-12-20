@@ -9,11 +9,14 @@ API_carpool_all:
     defaults: { _controller: ChasAPIBundle:API:carpool, _format: html }
     requirements:
         _method:    GET
-        _format:    html|json|xml|rss
+        _format:    html|json|xml
 
 API_carpool_single:
     pattern:  /api/carpool/{id}.{_format}
     defaults: { _controller: ChasAPIBundle:API:carpool_single, _format: html }
+    requirements:
+        _method:    GET
+        _format:    html|json|xml
 
 API_carpool_single_new:
     pattern:  /api/carpool
@@ -32,7 +35,7 @@ API_all:
     defaults: { _controller: ChasAPIBundle:API:index, _format: html }
     requirements:
         _method:    GET
-        _format:    html|json|xml|rss
+        _format:    html|json|xml
 
 API_single:
     pattern:  /api/timetable/{resource}/{id}.{_format}
@@ -40,4 +43,4 @@ API_single:
     requirements:
         id:         \d+
         _method:    GET
-        _format:    html|json|xml|rss
+        _format:    html|json|xml
