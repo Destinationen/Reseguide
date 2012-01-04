@@ -1,5 +1,5 @@
 route_get:
-    pattern:    /routes.{_format}
+    pattern:    /api/routes.{_format}
     defaults:   { _controller: ChasRouteBundle:Route:all, _format: json }
     requirements:
         _method:    GET
