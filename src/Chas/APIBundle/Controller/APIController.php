@@ -143,5 +143,47 @@ class APIController extends Controller
 
         return new Response($r);
     }
+    
+    public function pageAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $r = $em->getRepository('ChasAPIBundle:Page')
+            ->findOneByPage($id);
+        
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->page_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            case 'text/xml':
+                $response = $this->render('ChasAPIBundle:Page:index.xml.twig', array('page' => $r));
+                $response->headers->set('Content-Type', 'application/xml');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:Page:index.html.twig', array('page' => $r));
+                break;
+        }
+
+    }
+    
+    private function page_json($r){
+        $return = array();
+        
+        $return['page'] = $r->getPage();
+        $return['email'] = $r->getEmail();
+        $return['phonenumber'] = $r->getPhonenumber();
+        $return['address'] = $r->getAddress();
+
+        return json_encode($return);
+    }
+
 
 }

@@ -44,3 +44,9 @@ API_single:
         id:         \d+
         _method:    GET
         _format:    html|json|xml
+API_page:
+    pattern:  /api/page/{id}.{_format}
+    defaults: { _controller: ChasAPIBundle:API:page, _format: html }
+    requirements:
+        _method:    GET
+        _format:    html|json|xml
