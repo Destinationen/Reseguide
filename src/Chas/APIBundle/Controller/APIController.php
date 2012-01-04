@@ -144,11 +144,11 @@ class APIController extends Controller
         return new Response($r);
     }
     
-    public function pageAction($id, Request $request)
+    public function pageAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $r = $em->getRepository('ChasAPIBundle:Page')
-            ->findOneByPage($id);
+            ->findAll();
         
         $extension = $request->get('_format');
         $e = null;
@@ -163,18 +163,65 @@ class APIController extends Controller
                 return $response;
                 break;
             case 'text/xml':
-                $response = $this->render('ChasAPIBundle:Page:index.xml.twig', array('page' => $r));
+                $response = $this->render('ChasAPIBundle:Page:all.xml.twig', array('pages' => $r));
                 $response->headers->set('Content-Type', 'application/xml');
                 return $response;
                 break;
             default:
-                return $this->render('ChasAPIBundle:Page:index.html.twig', array('page' => $r));
+                return $this->render('ChasAPIBundle:Page:all.html.twig', array('pages' => $r));
                 break;
         }
 
     }
     
     private function page_json($r){
+        $return = array();
+ 
+        foreach ($r as &$page){
+            $tmp = array();
+
+            $tmp['page'] = $page->getPage();
+            $tmp['email'] = $page->getEmail();
+            $tmp['phonenumber'] = $page->getPhonenumber();
+            $tmp['address'] = $page->getAddress();
+
+            $return[] = $tmp;
+        }
+       
+        return json_encode($return);
+    }
+
+    public function pageSingleAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $r = $em->getRepository('ChasAPIBundle:Page')
+            ->findOneByPage($id);
+        
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->pageSingle_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            case 'text/xml':
+                $response = $this->render('ChasAPIBundle:Page:single.xml.twig', array('page' => $r));
+                $response->headers->set('Content-Type', 'application/xml');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:Page:single.html.twig', array('page' => $r));
+                break;
+        }
+
+    }
+    
+    private function pageSingle_json($r){
         $return = array();
         
         $return['page'] = $r->getPage();

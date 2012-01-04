@@ -1,0 +1,14 @@
+{% extends '::base.xml.twig' %}
+
+{% block body %}
+<pages>
+{% for page in pages %}
+    <page>
+        <title>{{ page.page }}</title>
+        <phonenumber>{{ page.phonenumber }}</phonenumber>
+        <email>{{ page.email }}</email>
+        <address>{{ page.address }}</address>
+    </page>
+{% endfor %}
+</pages>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<ul>
+{% for page in pages %}
+    <li>
+        {{ page.page }}<br />
+        {{ page.phonenumber }}<br />
+        {{ page.email }}<br />
+        {{ page.address }}
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
