@@ -41,6 +41,14 @@ API_single:
         id:         \d+
         _method:    GET
         _format:    html|json|xml
+API_timetable_trip:
+    pattern:  /api/timetable/{resource}/{id}/{from}/{to}/{when}.{_format}
+    defaults: { _controller: ChasAPIBundle:API:trip, _format: html }
+    requirements:
+        id:         \d+
+        _method:    GET
+        _format:    html|json|xml
+
 
 API_page:
     pattern:  /api/page.{_format}

@@ -30,9 +30,9 @@ class TimeTable
     protected $type;
     
     /**
-     * @ORM\OneToMany(targetEntity="TimeTableStops", mappedBy="timetable")
+     * @ORM\OneToMany(targetEntity="TimeTableTrips", mappedBy="timetable")
      */
-    protected $stops;
+    protected $trips;
 
     /**
      * Get id
@@ -86,26 +86,26 @@ class TimeTable
 
     public function __construct()
     {
-        $this->stops = new ArrayCollection();
+        $this->trips = new ArrayCollection();
     }
     
     /**
-     * Add stops
+     * Add trips
      *
-     * @param Chas\APIBundle\Entity\TimeTableStops $stops
+     * @param Chas\APIBundle\Entity\TimeTableTrips $trips
      */
-    public function addTimeTableStops(\Chas\APIBundle\Entity\TimeTableStops $stops)
+    public function addTimeTableTrips(\Chas\APIBundle\Entity\TimeTableTrips $trips)
     {
-        $this->stops[] = $stops;
+        $this->trips[] = $trips;
     }
 
     /**
-     * Get stops
+     * Get trips
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getStops()
+    public function getTrips()
     {
-        return $this->stops;
+        return $this->trips;
     }
 }

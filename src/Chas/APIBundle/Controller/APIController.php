@@ -44,6 +44,15 @@ class APIController extends Controller
 
         return $this->render('ChasAPIBundle:Default:single.html.twig', array('resources' => $r));
     }
+    
+    public function tripAction($resource, $id, $from, $to, $when)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
+            ->findTrip($id, $from, $to, $when);
+
+        return $this->render('ChasAPIBundle:Default:timetabletrip.html.twig', array('resources' => $r, 'when' => $when));
+    }
 
     public function carpoolAction(Request $request)
     {

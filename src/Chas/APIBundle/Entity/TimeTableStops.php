@@ -3,14 +3,15 @@
 namespace Chas\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Chas\APIBundle\Repository\TimeTableRepository")
  * @ORM\Table(name="timetablestops")
  */
 class TimeTableStops
 {
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -21,29 +22,22 @@ class TimeTableStops
     /**
      * @ORM\Column(type="string", length="100")
      */
-    protected $stop;
+    protected $title;
     
     /**
-     * @ORM\Column(type="time")
+     * @ORM\OneToMany(targetEntity="TimeTableRoute", mappedBy="stops")
      */
-    protected $departure;
-    
-    /**
-     * @ORM\Column(type="date")
-     */
-    protected $availablefrom;
-    
-    /**
-     * @ORM\Column(type="date")
-     */
-    protected $availableto;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TimeTable", inversedBy="stops")
-     * @ORM\JoinColumn(name="timetable_id", referencedColumnName="id")
-     */
-    protected $timetable;
+    protected $routes;
 
+    /**
+     * @ORM\Column(type="string", length="10")
+     */
+    protected $latitude = "";
+
+    /**
+     * @ORM\Column(type="string", length="10")
+     */
+    protected $longitude = "";
 
     /**
      * Get id
@@ -56,102 +50,87 @@ class TimeTableStops
     }
 
     /**
-     * Set stop
+     * Set title
      *
-     * @param string $stop
+     * @param string $title
      */
-    public function setStop($stop)
+    public function setTitle($title)
     {
-        $this->stop = $stop;
+        $this->title = $title;
     }
 
     /**
-     * Get stop
+     * Get title
      *
      * @return string 
      */
-    public function getStop()
+    public function getTitle()
     {
-        return $this->stop;
+        return $this->title;
     }
 
     /**
-     * Set departure
+     * Set latitude
      *
-     * @param datetime $departure
+     * @param string $latitude
      */
-    public function setDeparture($departure)
+    public function setLatitude($latitude)
     {
-        $this->departure = $departure;
+        $this->latitude = $latitude;
     }
 
     /**
-     * Get departure
+     * Get latitude
      *
-     * @return datetime 
+     * @return string 
      */
-    public function getDeparture()
+    public function getLatitude()
     {
-        return $this->departure;
+        return $this->latitude;
     }
 
     /**
-     * Set availablefrom
+     * Set longitude
      *
-     * @param date $availablefrom
+     * @param string $longitude
      */
-    public function setAvailablefrom($availablefrom)
+    public function setLongitude($longitude)
     {
-        $this->availablefrom = $availablefrom;
+        $this->longitude = $longitude;
     }
 
     /**
-     * Get availablefrom
+     * Get longitude
      *
-     * @return date 
+     * @return string 
      */
-    public function getAvailablefrom()
+    public function getLongitude()
     {
-        return $this->availablefrom;
+        return $this->longitude;
+    }
+
+    public function __construct()
+    {
+        $this->routes = new ArrayCollection();
     }
 
     /**
-     * Set availableto
+     * Set routes
      *
-     * @param date $availableto
+     * @param Chas\APIBundle\Entity\TimeTableRoute $routes
      */
-    public function setAvailableto($availableto)
+    public function setRoute(\Chas\APIBundle\Entity\TimeTableRoute $routes)
     {
-        $this->availableto = $availableto;
+        $this->routes[] = $routes;
     }
 
     /**
-     * Get availableto
+     * Get routes
      *
-     * @return date 
+     * @return Chas\APIBundle\Entity\TimeTableRoute
      */
-    public function getAvailableto()
+    public function getRoutes()
     {
-        return $this->availableto;
-    }
-
-    /**
-     * Set timetable
-     *
-     * @param Chas\APIBundle\Entity\TimeTable $timetable
-     */
-    public function setTimetable(\Chas\APIBundle\Entity\TimeTable $timetable)
-    {
-        $this->timetable = $timetable;
-    }
-
-    /**
-     * Get timetable
-     *
-     * @return Chas\APIBundle\Entity\TimeTable 
-     */
-    public function getTimetable()
-    {
-        return $this->timetable;
+        return $this->routes;
     }
 }
