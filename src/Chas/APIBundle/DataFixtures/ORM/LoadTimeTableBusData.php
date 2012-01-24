@@ -69,7 +69,6 @@ class LoadTimeTableBusData implements FixtureInterface
         $ttt_everyday->setAvailableto($seasonEndDate);
         $ttt_everyday->setTimetable($tt);
 
-        /*
         // Mon-Sat, no red days
         $ttt_mon2sat = new TimeTableTrips();
         $ttt_mon2sat->setDays(63);
@@ -77,7 +76,6 @@ class LoadTimeTableBusData implements FixtureInterface
         $ttt_mon2sat->setAvailablefrom($seasonStartDate);
         $ttt_mon2sat->setAvailableto($seasonEndDate);
         $ttt_mon2sat->setTimetable($tt);
-        */
 
         /**
          * Sundays
@@ -193,11 +191,14 @@ class LoadTimeTableBusData implements FixtureInterface
          * Define the Route
          */
 
+        // EVERYDAY
+
         // Shell
         $route_2 = new TimeTableRoute();
         $route_2->setRouteorder(2);
+        $route_2->setTitle('Tänndalslinjen');
         $ttr_2_departure = new datetime();
-        $ttr_2_departure->settime(14,16,0);
+        $ttr_2_departure->settime(9,41,0);
         $route_2->setDeparture($ttr_2_departure);
         $route_2->addStops($tts_2);
         $route_2->addTrips($ttt_everyday);
@@ -205,8 +206,9 @@ class LoadTimeTableBusData implements FixtureInterface
         // OK
         $route_3 = new TimeTableRoute();
         $route_3->setRouteorder(3);
+        $route_3->setTitle('Tänndalslinjen');
         $ttr_3_departure = new datetime();
-        $ttr_3_departure->settime(14,18,0);
+        $ttr_3_departure->settime(9,43,0);
         $route_3->setDeparture($ttr_3_departure);
         $route_3->addStops($tts_3);
         $route_3->addTrips($ttt_everyday);
@@ -214,13 +216,56 @@ class LoadTimeTableBusData implements FixtureInterface
         // Grönländaren
         $route_4 = new TimeTableRoute();
         $route_4->setRouteorder(4);
+        $route_4->setTitle('Tänndalslinjen');
         $ttr_4_departure = new datetime();
-        $ttr_4_departure->settime(14,20,0);
+        $ttr_4_departure->settime(9,45,0);
         $route_4->setDeparture($ttr_4_departure);
         $route_4->addStops($tts_4);
         $route_4->addTrips($ttt_everyday);
 
+        // Skarvruet
+        $route_8 = new TimeTableRoute();
+        $route_8->setRouteorder(5);
+        $route_8->setTitle('Tänndalslinjen');
+        $ttr_8_departure = new datetime();
+        $ttr_8_departure->settime(9,55,0);
+        $route_8->setDeparture($ttr_8_departure);
+        $route_8->addStops($tts_7);
+        $route_8->addTrips($ttt_mon2sat);
 
+
+
+        // MON2SAT
+
+        // Shell
+        $route_5 = new TimeTableRoute();
+        $route_5->setRouteorder(2);
+        $route_5->setTitle('Tänndalslinjen');
+        $ttr_5_departure = new datetime();
+        $ttr_5_departure->settime(14,16,0);
+        $route_5->setDeparture($ttr_5_departure);
+        $route_5->addStops($tts_2);
+        $route_5->addTrips($ttt_mon2sat);
+        
+        // OK
+        $route_6 = new TimeTableRoute();
+        $route_6->setRouteorder(3);
+        $route_6->setTitle('Tänndalslinjen');
+        $ttr_6_departure = new datetime();
+        $ttr_6_departure->settime(14,18,0);
+        $route_6->setDeparture($ttr_6_departure);
+        $route_6->addStops($tts_3);
+        $route_6->addTrips($ttt_mon2sat);
+        
+        // Grönländaren
+        $route_7 = new TimeTableRoute();
+        $route_7->setRouteorder(4);
+        $route_7->setTitle('Tänndalslinjen');
+        $ttr_7_departure = new datetime();
+        $ttr_7_departure->settime(14,20,0);
+        $route_7->setDeparture($ttr_7_departure);
+        $route_7->addStops($tts_4);
+        $route_7->addTrips($ttt_mon2sat);
 
 
 
@@ -242,7 +287,7 @@ class LoadTimeTableBusData implements FixtureInterface
 
         // Persist the Trips
         $manager->persist($ttt_everyday);
-        //$manager->persist($ttt_mon2sat);
+        $manager->persist($ttt_mon2sat);
         //$manager->persist($ttt_sun);
         //$manager->persist($ttt_sunExc1);
         //$manager->persist($ttt_sunExc2);   
@@ -251,6 +296,11 @@ class LoadTimeTableBusData implements FixtureInterface
         $manager->persist($route_2);
         $manager->persist($route_3);
         $manager->persist($route_4);
+        $manager->persist($route_8);
+
+        $manager->persist($route_5);
+        $manager->persist($route_6);
+        $manager->persist($route_7);
 
         $manager->flush();
     }

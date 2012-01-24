@@ -18,7 +18,12 @@ class TimeTableRoute
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
+    /**
+     * @ORM\Column(type="string", length="100")
+     */
+    protected $title;
+
     /**
      * @ORM\Column(type="integer") 
      */
@@ -42,7 +47,7 @@ class TimeTableRoute
     
     /**
      * @ORM\ManyToOne(targetEntity="TimeTableStops", inversedBy="routes")
-     * @ORM\JoinColumn(name="timetabletroute_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="timetabletstops_id", referencedColumnName="id")
      */
     protected $stops;
     
@@ -61,6 +66,27 @@ class TimeTableRoute
     {
         return $this->id;
     }
+    
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
 
     /**
      * Set departure

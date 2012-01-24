@@ -4,7 +4,7 @@
 <p>{{ r }}</p>
 <ul>
 {% for resource in resources %}
-    <li><a href="{{ path('API_single', { 'resource': 'train', 'id': resource.id }) }}">
+    <li><a href="{{ path('API_single', { 'resource': r, 'id': resource.id }) }}">
         {{ resource.name }}
     </a></li>
 {% endfor %}

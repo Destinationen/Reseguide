@@ -45,13 +45,48 @@ class APIController extends Controller
         return $this->render('ChasAPIBundle:Default:single.html.twig', array('resources' => $r));
     }
     
-    public function tripAction($resource, $id, $from, $to, $when)
+    public function tripAction(Request $request, $resource, $from, $to, $when)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
-            ->findTrip($id, $from, $to, $when);
+ 
+        $fromstop = $em->getRepository('ChasAPIBundle:TimeTableStops')
+            ->findOneById($from);
 
-        return $this->render('ChasAPIBundle:Default:timetabletrip.html.twig', array('resources' => $r, 'when' => $when));
+        $tostop = $em->getRepository('ChasAPIBundle:TimeTableStops')
+            ->findOneById($to);
+ 
+        $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
+            ->findTrip($fromstop, $tostop, $when);
+/*
+        $theStops[] = $em->getRepository('ChasAPIBundle:TimeTableRoute')
+            ->findStopsByTrip();
+ */
+        
+
+
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->timetable_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            case 'text/xml':
+                $response = $this->render('ChasAPIBundle:CarPool:index.xml.twig', array('resources' => $r));
+                $response->headers->set('Content-Type', 'application/xml');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:Default:timetabletrip.html.twig', array('resources' => $r, 'when' => $when, 'fromstop' => $fromstop, 'tostop' => $tostop));
+                break;
+        }
+
+
     }
 
     public function carpoolAction(Request $request)
@@ -83,7 +118,29 @@ class APIController extends Controller
         }
 
     }
-    
+
+    private function timetable_json($r){
+        $return = array();
+
+        foreach($r as &$timetable) {
+            foreach($timetable['stops'] as $stop){
+                $tmp['id'] = $stop->getId();
+                $tmp['tripid'] = $stop->getTrips()->getId();
+                $tmp['departure'] = $stop->getDeparture();
+                $tmp['line'] = $stop->getTitle();
+                $tmp['stop'] = $stop->getStops()->getTitle();
+                $tmp['stopid'] = $stop->getStops()->getId();
+
+                $trip[] = $tmp;
+                unset($tmp); 
+            }
+            $return[] = $trip;
+            unset($trip);
+        }
+
+        return json_encode($return);
+    }
+
     private function carpool_json($r){
         $return = array();
 

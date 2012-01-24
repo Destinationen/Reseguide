@@ -1,14 +1,20 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h1>FROM* - *TO* {{ when }}</h1>
-<p>List all the times of departure from *FROM*</p>
+<h1>{{ fromstop.title }} - {{ tostop.title }} {{ when }}</h1>
+<p>List all the times of departure from {{ fromstop.title }}</p>
 <p>A click on a departure, should result in a list of the following stops, that day, from that time. It should also beep account if this is a red day.</p>
 {% if resources %}
 <ul>
 {% for resource in resources %}
     <li>
-        {{ resource.departure.format('H:i') }} - {{ resource.stop }}
+         route.id: {{ resource.routes.id }}, trips.id: {{ resource.routes.trips.id }}, timetable.name: {{ resource.routes.trips.timetable.name }}, route.title: {{ resource.routes.title }}, departure: {{ resource.routes.departure.format('H:i') }}, stop: {{ resource.routes.stops.title }}
+        
+        <ul>
+        {% for stop in resource.stops %}
+            <li>{{ stop.stops.id }} - {{ stop.departure.format('H:i') }} - {{ stop.stops.title }}</li>
+        {% endfor %}
+        </ul>
     </li>
 {% endfor %}
 </ul>
