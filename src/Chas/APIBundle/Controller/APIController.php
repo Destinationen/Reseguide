@@ -122,20 +122,24 @@ class APIController extends Controller
     private function timetable_json($r){
         $return = array();
 
-        foreach($r as &$timetable) {
-            foreach($timetable['stops'] as $stop){
-                $tmp['id'] = $stop->getId();
-                $tmp['tripid'] = $stop->getTrips()->getId();
-                $tmp['departure'] = $stop->getDeparture();
-                $tmp['line'] = $stop->getTitle();
-                $tmp['stop'] = $stop->getStops()->getTitle();
-                $tmp['stopid'] = $stop->getStops()->getId();
+        if ($r){
 
-                $trip[] = $tmp;
-                unset($tmp); 
+            foreach($r as &$timetable) {
+                foreach($timetable['stops'] as $stop){
+                    $tmp['id'] = $stop->getId();
+                    $tmp['tripid'] = $stop->getTrips()->getId();
+                    $tmp['departure'] = $stop->getDeparture();
+                    $tmp['line'] = $stop->getTitle();
+                    $tmp['stop'] = $stop->getStops()->getTitle();
+                    $tmp['stopid'] = $stop->getStops()->getId();
+
+                    $trip[] = $tmp;
+                    unset($tmp); 
+                }
+                $return[] = $trip;
+                unset($trip);
             }
-            $return[] = $trip;
-            unset($trip);
+
         }
 
         return json_encode($return);
