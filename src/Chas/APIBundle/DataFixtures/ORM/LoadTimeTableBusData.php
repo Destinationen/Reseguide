@@ -22,6 +22,8 @@ class LoadTimeTableBusData implements FixtureInterface
 
 
         // Define all the stops
+        
+        // Red-line
         $tts_2 = new TimeTableStops();
         $tts_2->setTitle('Shell');
         $tts_2->setLatitude('12.531500');
@@ -51,6 +53,94 @@ class LoadTimeTableBusData implements FixtureInterface
         $tts_8->setTitle('Skarvrusätern');
         $tts_8->setLatitude('12.396583');
         $tts_8->setLongitude('62.538914');
+
+        $tts_9 = new TimeTableStops();
+        $tts_9->setTitle('Kjåsken');
+        $tts_9->setLatitude('12.346913');
+        $tts_9->setLongitude('62.538914');
+
+        $tts_10 = new TimeTableStops();
+        $tts_10->setTitle('HOtell Tänndalen');
+        $tts_10->setLatitude('12.332528');
+        $tts_10->setLongitude('62.543640');
+        
+        $tts_11 = new TimeTableStops();
+        $tts_11->setTitle('Skidstadion');
+        $tts_11->setLatitude('12.323556');
+        $tts_11->setLongitude('62.546970');
+
+        $tts_12 = new TimeTableStops();
+        $tts_12->setTitle('Tänndalens Skiduthyrning');
+        $tts_12->setLatitude('12.309639');
+        $tts_12->setLongitude('62.546970');
+
+        $tts_13 = new TimeTableStops();
+        $tts_13->setTitle('Svansjöliften');
+        $tts_13->setLatitude('12.254889');
+        $tts_13->setLongitude('62.563168');
+
+        $tts_14 = new TimeTableStops();
+        $tts_14->setTitle('Buskvallen');
+        $tts_14->setLatitude('12.242956');
+        $tts_14->setLongitude('62.569267');
+
+        $tts_15 = new TimeTableStops();
+        $tts_15->setTitle('Hamrafjället');
+        $tts_15->setLatitude('12.227333');
+        $tts_15->setLongitude('62.574360');
+
+        $tts_16 = new TimeTableStops();
+        $tts_16->setTitle('Göransgården');
+        $tts_16->setLatitude('12.187694');
+        $tts_16->setLongitude('62.569267');
+
+        $tts_17 = new TimeTableStops();
+        $tts_17->setTitle('Fjällnäs');
+        $tts_17->setLatitude('12.179028');
+        $tts_17->setLongitude('62.598778');
+
+        // Green-line
+        $tts_18 = new TimeTableStops();
+        $tts_18->setTitle('Funäsdalsberget');
+        $tts_18->setLatitude('12.554417');
+        $tts_18->setLongitude('62.546083');
+
+        $tts_19 = new TimeTableStops();
+        $tts_19->setTitle('Funäsdalens Fjällkamping');
+        $tts_19->setLatitude('12.563778');
+        $tts_19->setLongitude('62.568253');
+
+        $tts_20 = new TimeTableStops();
+        $tts_20->setTitle('Flon');
+        $tts_20->setLatitude('12.471419');
+        $tts_20->setLongitude('62.621094');
+
+        $tts_21 = new TimeTableStops();
+        $tts_21->setTitle('Gruvgubben');
+        $tts_21->setLatitude('12.444441');
+        $tts_21->setLongitude('62.637070');
+
+        $tts_22 = new TimeTableStops();
+        $tts_22->setTitle('Macken');
+        $tts_22->setLatitude('12.439629');
+        $tts_22->setLongitude('62.639900');
+
+        $tts_23 = new TimeTableStops();
+        $tts_23->setTitle('Björkliden');
+        $tts_23->setLatitude('12.433594');
+        $tts_23->setLongitude('62.641491');
+
+        $tts_24 = new TimeTableStops();
+        $tts_24->setTitle('Bruksvallarna, ICA Stigmyhrs');
+        $tts_24->setLatitude('12.417480');
+        $tts_24->setLongitude('62.641354');
+
+        $tts_25 = new TimeTableStops();
+        $tts_25->setTitle('Ramundberget');
+        $tts_25->setLatitude('12.388630');
+        $tts_25->setLongitude('62.700886');
+
+
 
         /**
          * Define the Trips
