@@ -9,7 +9,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class TimeTableRepository extends EntityRepository
 {
+    public function findTimeTablesOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT tt FROM ChasAPIBundle:TimeTable tt ORDER BY tt.id ASC')
+            ->getResult();
+    } 
     
+    public function findStopsOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT tts FROM ChasAPIBundle:TimeTableStops tts ORDER BY tts.id ASC')
+            ->getResult();
+    } 
+   
+    public function findTripsOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT ttt FROM ChasAPIBundle:TimeTableTrips ttt ORDER BY ttt.id ASC')
+            ->getResult();
+    } 
     public function findStopsByTrip($trip){
 
         $tmp = $this->getEntityManager()

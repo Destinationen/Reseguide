@@ -2,13 +2,16 @@
 
 namespace Chas\BannerBundle\DataFixtures\ORM;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+
 use Chas\APIBundle\Entity\Page;
+
 use DateTime;
 
 class LoadPageData implements FixtureInterface
 {
-    public function load($manager)
+    public function load(ObjectManager $manager)
     {
         //$pubDate = new DateTime();
         //$pubDate->setDate(2012, 2, 10);

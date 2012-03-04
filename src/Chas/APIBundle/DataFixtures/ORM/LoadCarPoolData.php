@@ -3,13 +3,16 @@
 namespace Chas\APIBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
 use Chas\APIBundle\Entity\CarPool;
 use Chas\APIBundle\Entity\Destination;
+
 use DateTime;
 
 class LoadCarPoolData implements FixtureInterface
 {
-    public function load($manager)
+    public function load(ObjectManager $manager)
     {
         $d1 = new Destination();
         $d1->setName('Funäsdalen');
@@ -23,9 +26,9 @@ class LoadCarPoolData implements FixtureInterface
 
         $cp1->setDateFrom($cpDate1);
         $cp1->setSeats(3);
-        $cp1->setName('Uno Larsson');
-        $cp1->setEmail('uno@webbninja.nu');
-        $cp1->setPhonenumber('076-7757571');
+        $cp1->setName('Uno Unosson');
+        $cp1->setEmail('dummy.email@domain.se');
+        $cp1->setPhonenumber('070-1231212');
        
         $d2 = new Destination();
         $d2->setName('Ramundberget');
@@ -39,8 +42,8 @@ class LoadCarPoolData implements FixtureInterface
 
         $cp2->setDateFrom($cpDate2);
         $cp2->setSeats(2);
-        $cp2->setName('Anette Persson');
-        $cp2->setEmail('ap@hotmail.com');
+        $cp2->setName('Ulrika Ulrikasson');
+        $cp2->setEmail('dummy.email@domain.se');
         $cp2->setPhonenumber('070-1231212');
         
 
