@@ -34,7 +34,7 @@ class APIController extends Controller
         
     }
 
-    public function singleAction($resource, $id)
+    public function singleAction(Request $request, $resource, $id)
     {
         echo RequestHash::getHash();
 
@@ -43,8 +43,68 @@ class APIController extends Controller
             ->findByTimetable($id);
 
         return $this->render('ChasAPIBundle:Default:single.html.twig', array('resources' => $r));
+
+
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->timetable_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:Default:timetabletrip.html.twig', array('resources' => $r, 'when' => $when, 'fromstop' => $fromstop, 'tostop' => $tostop));
+                break;
+        }
     }
     
+    public function stopsAction(Request $request, $resource){
+        $em = $this->getDoctrine()->getEntityManager();
+        $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
+            ->findActiveStopsByResource($resource);
+
+        $extension = $request->get('_format');
+        $e = null;
+        if (null !== $extension && $request->getMimeType($extension)){
+            $e = $request->getMimeType($extension);
+        }
+        
+        switch ($e){
+            case 'application/json':
+                $response = new Response($this->stops_json($r));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+                break;
+            default:
+                return $this->render('ChasAPIBundle:Default:timetablestops.html.twig', array('resources' => $r));
+                break;
+        }
+
+    }
+
+    private function stops_json($r){
+        $return = array();
+
+        if ($r){
+            foreach($r as &$stop) {
+                $tmp['id'] = $stop->getId();
+                $tmp['title'] = $stop->getTitle();
+                $tmp['latitude'] = $stop->getLatitude();
+                $tmp['longitude'] = $stop->getLongitude();
+                $return[] = $tmp;
+                unset($tmp); 
+            }
+        }
+
+        return json_encode($return);
+    }
+
+
     public function tripAction(Request $request, $resource, $from, $to, $when)
     {
         $em = $this->getDoctrine()->getEntityManager();

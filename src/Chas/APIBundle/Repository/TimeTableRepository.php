@@ -9,7 +9,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class TimeTableRepository extends EntityRepository
 {
+    public function findTimeTablesOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT tt FROM ChasAPIBundle:TimeTable tt ORDER BY tt.id ASC')
+            ->getResult();
+    } 
     
+    public function findStopsOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT tts FROM ChasAPIBundle:TimeTableStops tts ORDER BY tts.id ASC')
+            ->getResult();
+    } 
+   
+    public function findTripsOrderedById(){
+        return $this->getEntityManager()
+            ->createQuery('SELECT ttt FROM ChasAPIBundle:TimeTableTrips ttt ORDER BY ttt.id ASC')
+            ->getResult();
+    } 
     public function findStopsByTrip($trip){
 
         $tmp = $this->getEntityManager()
@@ -71,6 +87,50 @@ class TimeTableRepository extends EntityRepository
         }
 
         return $return;
+
+    }
+
+    public function findActiveStopsByResource($resource){
+        /*
+        // This was suppose to get the currently used stops, but I could not get it to work...
+        $sql = 'SELECT ttr DISTINCT ttr AS stops FROM ChasAPIBundle:TimeTableRoute ttr
+                INNER JOIN ttr.trips ttt
+                INNER JOIN ttt.timetable tt
+                INNER JOIN ttr.stops tts
+                WHERE ttt.id = ttr.trips
+                AND ttt.timetable = tt.id
+                AND tt.type = :type';
+         */
+
+        // Right now there is only bus stops so...
+        $sql = 'SELECT tts FROM ChasAPIBundle:TimeTableStops tts';
+
+        $r = $this->getEntityManager()
+            ->createQuery($sql);
+                //->setParameter('type', $resource);
+
+        try {
+            return $r->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+
+    }
+
+    public function findByTimetable($ttid){
+
+        $r = $this->getEntityManager()
+            ->createQuery('SELECT ttr, ttt FROM ChasAPIBundle:TimeTableRoute ttr
+                JOIN ttr.trips ttt
+                WHERE ttt.timetable = :ttid
+                AND ttt.id = ttr.trips')
+            ->setParameter('ttid', $ttid);
+
+        try {
+            return $r->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
 
     }
 }
