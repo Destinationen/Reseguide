@@ -3,12 +3,14 @@
 namespace Chas\BannerBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
 use Chas\BannerBundle\Entity\Banner;
 use DateTime;
 
 class LoadBannerData implements FixtureInterface
 {
-    public function load($manager)
+    public function load(ObjectManager $manager)
     {
        
         $pubDate = new DateTime();

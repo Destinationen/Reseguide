@@ -3,12 +3,15 @@
 namespace Chas\APIBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
 use Chas\APIBundle\Entity\RedDay;
+
 use DateTime;
 
 class LoadRedDayData implements FixtureInterface
 {
-    public function load($manager)
+    public function load(ObjectManager $manager)
     {
         
         // 2012
