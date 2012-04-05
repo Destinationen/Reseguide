@@ -47,6 +47,14 @@ API_timetable_trip:
     requirements:
         _method:    GET
         _format:    html|json|xml
+API_timetable_stops:
+    pattern:  /api/timetable/{resource}/stops.{_format}
+    defaults: { _controller: ChasAPIBundle:API:stops, _format: html }
+    requirements:
+        _method:    GET
+        _format:    html|json
+
+
 
 
 API_page:
