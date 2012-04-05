@@ -6,6 +6,7 @@
 /app/logs/*
 /vendor/
 /app/config/parameters.ini
+/app/config/security.yml
 
 *.swp
 *~
