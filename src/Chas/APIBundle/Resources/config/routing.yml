@@ -1,5 +1,5 @@
 API_start:
-    pattern:  /api/
+    pattern:  /
     defaults: { _controller: ChasAPIBundle:API:welcome }
     requirements:
         _method:    GET

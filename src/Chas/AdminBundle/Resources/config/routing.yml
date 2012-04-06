@@ -1,5 +1,5 @@
 ChasAdminBundle_homepage:
-    pattern:        /
+    pattern:        /admin
     defaults:       { _controller: ChasAdminBundle:Default:index }
 
 ChasAdminBundle_page:
