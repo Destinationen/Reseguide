@@ -3,13 +3,13 @@
 {% block body %}
 <h1>Funäsfjällens Travel Guide API</h1>
 <p>Don't make to many requests, this will get your ip blocked.</p>
-<p>Append the urls with a .response-type to get the data in format you want, like this <a href="{{ path('API_all', {'resource': 'train', '_format': 'json'}) }}">/api/timetable/train.json</a>. These formats are available:
+<p>Append the urls with a .response-type to get the data in format you want, like this <a href="{{ path('API_all', {'resource': 'bus', '_format': 'json'}) }}">/api/timetable/bus.html</a>. These formats are available:
 <ul>
     <li>.html (default)</li>
     <li>.json</li>
     <li>.xml</li>
-    <li>.rss</li>
 </ul>
+Not all formats are available for every request.
 </p>
 <p>
 The API uses a internal request cache, and the symfont cache. How long the system will cache the request depends on the request type.
