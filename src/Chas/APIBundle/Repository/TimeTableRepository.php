@@ -26,13 +26,15 @@ class TimeTableRepository extends EntityRepository
             ->createQuery('SELECT ttt FROM ChasAPIBundle:TimeTableTrips ttt ORDER BY ttt.id ASC')
             ->getResult();
     } 
-    public function findStopsByTrip($trip){
+    public function findStopsByTrip($trip, $titles){
 
         $tmp = $this->getEntityManager()
             ->createQuery('SELECT ttr FROM ChasAPIBundle:TimeTableRoute ttr
                 WHERE ttr.trips = :trip
-                ORDER BY ttr.routeorder ASC')
-                ->setParameter('trip', $trip)->getResult();
+                AND ttr.title IN (:titles)
+                ORDER BY ttr.title ASC, ttr.routeorder ASC')
+                ->setParameter('trip', $trip)
+                ->setParameter('titles', $titles)->getResult();
         $return = $tmp;
         //$return = null;
         /*
@@ -52,24 +54,31 @@ class TimeTableRepository extends EntityRepository
         if ($redday){
             $rd = 1;
         }
-        
+
+        if (!is_object($to) || !is_object($from)) {
+            throw new Exception('Stop is Missing');
+        }
+
         $r = $this->getEntityManager()
             ->createQuery('SELECT ttr, ttt FROM ChasAPIBundle:TimeTableRoute ttr
-            JOIN ttr.trips ttt
-            WHERE :redday = ttt.redday
-            AND :when >= ttt.availablefrom
-            AND :when <= ttt.availableto
-            AND ttt.id = ttr.trips
-            AND ttr.stops IN (:from, :to)
-            AND ttr.routeorder < (SELECT ttrsub.routeorder FROM ChasAPIBundle:TimeTableRoute ttrsub
-                WHERE ttrsub.stops = :to
-                AND ttrsub.trips = ttr.trips)
-            ')
-            ->setParameter('when', $when)
-            ->setParameter('redday', $rd )
-            ->setParameter('from', $from->getId())
-            ->setParameter('to', $to->getId())
-            ;
+                JOIN ttr.trips ttt
+                WHERE :redday = ttt.redday
+                AND :when >= ttt.availablefrom
+                AND :when <= ttt.availableto
+                AND ttt.id = ttr.trips
+                AND ttr.stops IN (:from, :to)
+                AND ttr.routeorder < (SELECT MAX(ttrsub.routeorder) FROM ChasAPIBundle:TimeTableRoute ttrsub
+                    WHERE ttrsub.stops = :to
+                    AND ttrsub.trips = ttr.trips
+                )
+                GROUP BY ttr.trips
+                ORDER BY ttr.title ASC
+                ')
+                ->setParameter('when', $when)
+                ->setParameter('redday', $rd )
+                ->setParameter('from', $from->getId())
+                ->setParameter('to', $to->getId())
+                ;
         
         $routes;
 
@@ -79,15 +88,57 @@ class TimeTableRepository extends EntityRepository
             $routes = null;
         }
 
+        $titles = array(:;
+        for($i=0;$i<count($routes);$i++){
+            $title = $routes[$i]->getTitle();
+            if (array_search($title, $titles) === false){
+                $titles[] = $title;
+            }
+        }
+
         $return = null;
         for($i=0;$i<count($routes);$i++){
-            $tmp['stops'] = $this->findStopsByTrip($routes[$i]->getTrips()->getId());
+            $cleaned = $this->findStopsByTrip($routes[$i]->getTrips()->getId(), $titles);
+            $tmp['stops'] = $cleaned;
             $tmp['routes'] = $routes[$i];
             $return[] = $tmp;
         }
 
         return $return;
 
+    }
+
+    private function cleanStops($stops, $from, $to)
+    {
+        $cleaned;
+        $status = 0;
+        foreach ($stops as $stop){
+
+            $tmp;
+
+            // Found From
+            if ($to->getId() == $stop->getId() && 0 == $status){
+                $status = 1;
+            }
+            
+            // Found another From, start over!
+            if ($from->getId() == $stop->getId() && 1 == $status){
+                unset($tmp);
+            }
+            
+            // Found To
+            if ($to->getId() == $stop->getId() && 1 == $status){
+                $status = 2;
+            }
+
+            if (1 == $status){
+                $tmp[] = $stop;
+            }
+
+        }
+
+
+        return $cleaned;
     }
 
     public function findActiveStopsByResource($resource){
