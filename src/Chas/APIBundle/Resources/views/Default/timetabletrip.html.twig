@@ -8,13 +8,32 @@
 <ul>
 {% for resource in resources %}
     <li>
-         route.id: {{ resource.routes.id }}, trips.id: {{ resource.routes.trips.id }}, timetable.name: {{ resource.routes.trips.timetable.name }}, route.title: {{ resource.routes.title }}, departure: {{ resource.routes.departure.format('H:i') }}, stop: {{ resource.routes.stops.title }}
+    route.id: {{ resource.routes.id }}, trips.id: {{ resource.routes.trips.id }}, timetable.name: {{ resource.routes.trips.timetable.name }}, route.title: {{ resource.routes.title }}, departure: {{ resource.routes.departure.format('H:i') }}
         
-        <ul>
-        {% for stop in resource.stops %}
-            <li>{{ stop.stops.id }} - {{ stop.departure.format('H:i') }} - {{ stop.stops.title }}</li>
+        <table style="display: block;">
+            <tr>
+                <th>Route Order</th>
+                <th>Stop ID</th>
+                <th>Departure</th>
+                <th>Title</th>
+                <th>Route Title</th>
+                <th>End Satation</th>
+            </tr>
+            {% for stop in resource.stops %}
+            
+            <tr {% if stop.stops.id == fromstop.id %} style="color: #00ff00;" {% endif %}{% if stop.stops.id == tostop.id %} style="color: #ff0000;" {% endif %}>
+
+                <td>{{ stop.routeorder }}</td>
+                <td>{{ stop.stops.id }}</td>
+                <td>{{ stop.departure.format('H:i') }}</td>
+                <td>{{ stop.stops.title }}</td>
+                <td>{{ stop.title }}</td>
+                <td>{% if 1 == stop.endstation %} X {% endif %}</td>
+
+            </tr>
+
         {% endfor %}
-        </ul>
+        </table>
     </li>
 {% endfor %}
 </ul>

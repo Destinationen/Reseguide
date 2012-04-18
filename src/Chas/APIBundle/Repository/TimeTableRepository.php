@@ -56,7 +56,7 @@ class TimeTableRepository extends EntityRepository
         }
 
         if (!is_object($to) || !is_object($from)) {
-            throw new Exception('Stop is Missing');
+            #throw new Exception('Stop is Missing');
         }
 
         $r = $this->getEntityManager()
@@ -88,7 +88,7 @@ class TimeTableRepository extends EntityRepository
             $routes = null;
         }
 
-        $titles = array(:;
+        $titles = array();
         for($i=0;$i<count($routes);$i++){
             $title = $routes[$i]->getTitle();
             if (array_search($title, $titles) === false){
