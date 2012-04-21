@@ -56,6 +56,7 @@ class TimeTableRepository extends EntityRepository
         }
 
         if (!is_object($to) || !is_object($from)) {
+            return false;
             #throw new Exception('Stop is Missing');
         }
 

@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+{% if resources %}
 <h1>{{ fromstop.title }} - {{ tostop.title }} {{ when }}</h1>
 <p>List all the times of departure from {{ fromstop.title }}</p>
 <p>A click on a departure, should result in a list of the following stops, that day, from that time. It should also keep account if this is a red day.</p>
-{% if resources %}
 <ul>
 {% for resource in resources %}
     <li>
