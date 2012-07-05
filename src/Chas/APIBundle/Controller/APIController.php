@@ -24,26 +24,21 @@ class APIController extends Controller
 
     public function indexAction($resource)
     {
-        
         $em = $this->getDoctrine()->getEntityManager();
         
         $r = $em->getRepository('ChasAPIBundle:TimeTable')
             ->findByType($resource);
 
         return $this->render('ChasAPIBundle:Default:index.html.twig', array('resources' => $r, 'r' => $resource));
-        
     }
 
     public function singleAction(Request $request, $resource, $id)
     {
-        echo RequestHash::getHash();
-
         $em = $this->getDoctrine()->getEntityManager();
         $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
             ->findByTimetable($id);
 
         return $this->render('ChasAPIBundle:Default:single.html.twig', array('resources' => $r));
-
 
         $extension = $request->get('_format');
         $e = null;
@@ -84,7 +79,6 @@ class APIController extends Controller
                 return $this->render('ChasAPIBundle:Default:timetablestops.html.twig', array('resources' => $r));
                 break;
         }
-
     }
 
     private function stops_json($r){
@@ -117,12 +111,6 @@ class APIController extends Controller
  
         $r = $em->getRepository('ChasAPIBundle:TimeTableStops')
             ->findTrip($fromstop, $tostop, $when);
-/*
-        $theStops[] = $em->getRepository('ChasAPIBundle:TimeTableRoute')
-            ->findStopsByTrip();
- */
-        
-
 
         $extension = $request->get('_format');
         $e = null;
@@ -145,8 +133,6 @@ class APIController extends Controller
                 return $this->render('ChasAPIBundle:Default:timetabletrip.html.twig', array('resources' => $r, 'when' => $when, 'fromstop' => $fromstop, 'tostop' => $tostop));
                 break;
         }
-
-
     }
 
     public function carpoolAction(Request $request)
@@ -183,7 +169,6 @@ class APIController extends Controller
         $return = array();
 
         if ($r){
-
             foreach($r as &$timetable) {
                 foreach($timetable['stops'] as $stop){
                     $tmp['id'] = $stop->getId();
@@ -199,7 +184,6 @@ class APIController extends Controller
                 $return[] = $trip;
                 unset($trip);
             }
-
         }
 
         return json_encode($return);
@@ -228,7 +212,6 @@ class APIController extends Controller
             ->findOneById($id);
 
         return $this->render('ChasAPIBundle:CarPool:single.html.twig', array('resource' => $r));
-
     }
 
     public function weatherAction($lat, $lon)
@@ -267,8 +250,7 @@ class APIController extends Controller
 
         } else {
             // EY! LOOK AT THAT! We are not the first ones here!
-
-            $r = '<destination>cache</destination>'.$ac->getResponse();
+            $r = $ac->getResponse();
         }
 
         return new Response($r);
@@ -321,8 +303,7 @@ class APIController extends Controller
         return json_encode($return);
     }
 
-    public function pageSingleAction($id, Request $request)
-    {
+    public function pageSingleAction($id, Request $request){
         $em = $this->getDoctrine()->getEntityManager();
         $r = $em->getRepository('ChasAPIBundle:Page')
             ->findOneByPage($id);
@@ -361,6 +342,4 @@ class APIController extends Controller
 
         return json_encode($return);
     }
-
-
 }
