@@ -27,10 +27,10 @@ class LoadTimeTableTripData extends AbstractFixture implements OrderedFixtureInt
          */
         // Every day
         $seasonStartDate = new DateTime();
-        $seasonStartDate->setDate(2011,12,25);
+        $seasonStartDate->setDate(2012,12,25);
         
         $seasonEndDate = new DateTime();
-        $seasonEndDate->setDate(2012,04,27);
+        $seasonEndDate->setDate(2013,04,27);
 
         $ttt_everyday = new TimeTableTrips();
         $ttt_everyday->setDays(127);
@@ -60,10 +60,10 @@ class LoadTimeTableTripData extends AbstractFixture implements OrderedFixtureInt
 
         // Sunday Exceptions 1
         $afDateSunException1 = new DateTime();
-        $afDateSunException1->setDate(2011,12,25);
+        $afDateSunException1->setDate(2012,12,25);
         
         $atDateSunException1 = new DateTime();
-        $atDateSunException1->setDate(2012,1,8);
+        $atDateSunException1->setDate(2013,1,8);
         
         /**
          * Sunday Exceptions 1
@@ -78,10 +78,10 @@ class LoadTimeTableTripData extends AbstractFixture implements OrderedFixtureInt
 
         // Sunday Exceptions 2
         $afDateSunException2 = new DateTime();
-        $afDateSunException2->setDate(2012,2,19);
+        $afDateSunException2->setDate(2013,2,19);
         
         $atDateSunException2 = new DateTime();
-        $atDateSunException2->setDate(2012,4,15);
+        $atDateSunException2->setDate(2013,4,15);
 
         /**
          * Sunday Exceptions 2
