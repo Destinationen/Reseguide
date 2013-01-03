@@ -276,7 +276,7 @@ class LoadRedDayData implements FixtureInterface
 
  
         $rdDay31 = new DateTime();
-        $rdDay31->setDate(2012,12,24);
+        $rdDay31->setDate(2013,12,24);
 
         $rd31 = new RedDay();
         $rd31->setName('Julafton');
@@ -284,7 +284,7 @@ class LoadRedDayData implements FixtureInterface
 
 
         $rdDay32 = new DateTime();
-        $rdDay32->setDate(2012,12,25);
+        $rdDay32->setDate(2013,12,25);
 
         $rd32 = new RedDay();
         $rd32->setName('Juldagen');
@@ -292,7 +292,7 @@ class LoadRedDayData implements FixtureInterface
 
 
         $rdDay33 = new DateTime();
-        $rdDay33->setDate(2012,12,26);
+        $rdDay33->setDate(2013,12,26);
 
         $rd33 = new RedDay();
         $rd33->setName('Annandag jul');
@@ -300,7 +300,7 @@ class LoadRedDayData implements FixtureInterface
 
 
         $rdDay34 = new DateTime();
-        $rdDay34->setDate(2012,12,31);
+        $rdDay34->setDate(2013,12,31);
 
         $rd34 = new RedDay();
         $rd34->setName('Nyårsafton');
